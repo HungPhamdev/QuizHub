@@ -47,5 +47,4 @@ jobs:
       run: sudo apt-get install ant
 
     - name: Build with Ant
-      working-directory: QuizHub/QuizHub
-      run: ant build
+      run: ant
