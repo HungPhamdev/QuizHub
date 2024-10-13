@@ -16,4 +16,16 @@ public class DatabaseConnection {
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
+
+    public static Connection connect() {
+        Connection conn = null;
+        try {
+            // Establish connection
+            conn = DriverManager.getConnection(URL);
+            System.out.println("Connection to SQLite has been established.");
+        } catch (SQLException e) {
+            System.out.println("Error connecting to SQLite: " + e.getMessage());
+        }
+        return conn;
+    }
 }
