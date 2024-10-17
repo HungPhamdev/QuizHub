@@ -5,6 +5,7 @@ import model.User;
 import repositories.UserRepository;
 
 public class UserService {
+
     private UserRepository userRepository;
 
     public UserService() {
