@@ -1,13 +1,13 @@
+
 import controller.AuthController;
 import view.QuizFrame;
 import javax.swing.JOptionPane;
-import view.Auth.LoginFrame;
+import javax.swing.SwingUtilities;
+import view.MainFrame;
 
 public class Main {
+
     public static void main(String[] args) {
-        LoginFrame frame = new LoginFrame();
-            frame.setVisible(true);
-        
         // Create the AuthController to manage authentication
 //        AuthController authController = new AuthController();
 //
@@ -22,5 +22,9 @@ public class Main {
 //            // Handle failed login
 //            JOptionPane.showMessageDialog(null, "Login failed. Please try again.", "Login Error", JOptionPane.ERROR_MESSAGE);
 //        }
+        SwingUtilities.invokeLater(() -> {
+            MainFrame mainFrame = new MainFrame();
+            mainFrame.setVisible(true);
+        });
     }
 }
