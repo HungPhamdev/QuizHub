@@ -2,13 +2,11 @@ package services;
 
 import model.User;
 import repositories.AuthRepository;
-import java.sql.SQLException;
 import org.mindrot.jbcrypt.BCrypt;
-import repositories.UserRepository;
 
 public class AuthService {
 
-    private AuthRepository authRepository;
+    private final AuthRepository authRepository;
 
     public AuthService() {
         this.authRepository = new AuthRepository();
@@ -18,6 +16,10 @@ public class AuthService {
         return authRepository.registerUser(user);
     }
 
+    public boolean isUserExists(String userName, String email){
+        return authRepository.isUserExists(userName, email);
+    }
+    
     public boolean login(String username, String password) {
         String hashedPassword = authRepository.getHashedPassword(username);
         if (hashedPassword != null) {

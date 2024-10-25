@@ -1,5 +1,6 @@
 package view.Auth;
 
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import model.User;
 import services.AuthService;
@@ -7,8 +8,8 @@ import view.MainFrame;
 
 public class RegisterPanel extends javax.swing.JPanel {
 
-    private MainFrame mainFrame;
-    private AuthService authService;
+    private final MainFrame mainFrame;
+    private final AuthService authService;
 
     public RegisterPanel(MainFrame frame) {
         this.mainFrame = frame;
@@ -118,12 +119,25 @@ public class RegisterPanel extends javax.swing.JPanel {
         String fullname = fullnameField.getText();
         String email = emailField.getText();
 
+        if (!isValidEmail(email)) {
+            JOptionPane.showMessageDialog(this, "Email is not valid.");
+            return;
+        }
+        
         User user = new User();
         user.setUserName(username);
         user.setPassword(password);
         user.setFullName(fullname);
         user.setEmail(email);
 
+        
+        
+        boolean userIsExists = this.authService.isUserExists(username, email);
+        if (userIsExists) {
+            JOptionPane.showMessageDialog(this, "Username or email is exists.");
+            return;
+        }
+        
         boolean result = this.authService.registerUser(user);
 
         if (result) {
@@ -133,7 +147,11 @@ public class RegisterPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Registration failed.");
         }
     }//GEN-LAST:event_saveButtonActionPerformed
-
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailField;

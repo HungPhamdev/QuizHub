@@ -7,9 +7,12 @@ import java.sql.SQLException;
 import model.User;
 import java.sql.ResultSet;
 import org.mindrot.jbcrypt.BCrypt;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AuthRepository {
-
+    private static final Logger logger = Logger.getLogger(AuthRepository.class.getName());
+    
     public boolean registerUser(User user) {
         String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
 
@@ -22,7 +25,25 @@ public class AuthRepository {
 
             return pstmt.executeUpdate() > 0; // Return true if a row was inserted
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Database error occurred during user registration", e);
+        }
+        return false;
+    }
+
+    public boolean isUserExists(String userName, String email) {
+
+        String sql = "SELECT COUNT(*) FROM Users WHERE UserName = ? OR Email = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, userName);
+            pstmt.setString(2, email);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; // Trả về true nếu số lượng lớn hơn 0
+                }
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Database error occurred", e);logger.log(Level.SEVERE, "Database error occurred during user existence check", e);
         }
         return false;
     }
@@ -40,7 +61,7 @@ public class AuthRepository {
                 hashedPassword = resultSet.getString("password");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Database error occurred while fetching hashed password", e);
         }
         return hashedPassword;
     }
