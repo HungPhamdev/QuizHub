@@ -16,8 +16,8 @@ public class AuthService {
         return authRepository.registerUser(user);
     }
 
-    public boolean isUserExists(String userName, String email){
-        return authRepository.isUserExists(userName, email);
+    public boolean isUserExists(String userName){
+        return authRepository.isUserExists(userName);
     }
     
     public boolean login(String username, String password) {

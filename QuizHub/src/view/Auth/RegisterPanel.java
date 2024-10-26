@@ -119,8 +119,31 @@ public class RegisterPanel extends javax.swing.JPanel {
         String fullname = fullnameField.getText();
         String email = emailField.getText();
 
+        if (username.trim().isEmpty()) {
+            showErrorMessage("Username is required!");
+            return;
+        }
+        else if (password.trim().isEmpty()) {
+            showErrorMessage("Password is required!");
+            return;
+        }
+        else if (fullname.trim().isEmpty()) {
+            showErrorMessage("Fullname is required!");
+            return;
+        }
+        else if (email.trim().isEmpty()) {
+            showErrorMessage("Email is required!");
+            return;
+        }
+        
+        boolean userIsExists = this.authService.isUserExists(username);
+        if (userIsExists) {
+            showErrorMessage("Username is exists!");
+            return;
+        }
+        
         if (!isValidEmail(email)) {
-            JOptionPane.showMessageDialog(this, "Email is not valid.");
+            showErrorMessage("Email is not valid.");
             return;
         }
         
@@ -129,14 +152,6 @@ public class RegisterPanel extends javax.swing.JPanel {
         user.setPassword(password);
         user.setFullName(fullname);
         user.setEmail(email);
-
-        
-        
-        boolean userIsExists = this.authService.isUserExists(username, email);
-        if (userIsExists) {
-            JOptionPane.showMessageDialog(this, "Username or email is exists.");
-            return;
-        }
         
         boolean result = this.authService.registerUser(user);
 
@@ -144,13 +159,17 @@ public class RegisterPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Registration successful!");
             mainFrame.showLoginPanel();
         } else {
-            JOptionPane.showMessageDialog(this, "Registration failed.");
+            showErrorMessage("Registration failed.");
         }
     }//GEN-LAST:event_saveButtonActionPerformed
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         Pattern pattern = Pattern.compile(emailRegex);
         return pattern.matcher(email).matches();
+    }
+    
+    private void showErrorMessage(String message) {
+        JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

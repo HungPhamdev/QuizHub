@@ -30,12 +30,11 @@ public class AuthRepository {
         return false;
     }
 
-    public boolean isUserExists(String userName, String email) {
+    public boolean isUserExists(String userName) {
 
-        String sql = "SELECT COUNT(*) FROM Users WHERE UserName = ? OR Email = ?";
+        String sql = "SELECT COUNT(1) FROM Users (NOLOCK) WHERE UserName = ?";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, userName);
-            pstmt.setString(2, email);
 
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
@@ -52,7 +51,7 @@ public class AuthRepository {
         String hashedPassword = null;
 
         try (Connection conn = DatabaseConnection.getConnection()) {
-            String sql = "SELECT password FROM users WHERE username = ?";
+            String sql = "SELECT password FROM users (NOLOCK) WHERE username = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setString(1, username);
 

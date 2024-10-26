@@ -129,6 +129,15 @@ public class LoginPanel extends javax.swing.JPanel {
         String username = userNameField.getText();
         String password = new String(passwordField.getPassword());
         
+        if (username.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Username is required!");
+            return;
+        }
+        else if (password.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Password is required!");
+            return;
+        }
+        
         if (authService.login(username, password)) {
             mainFrame.showHomePanel(); // Login successful
         } else {
