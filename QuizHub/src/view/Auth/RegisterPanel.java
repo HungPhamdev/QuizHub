@@ -43,7 +43,7 @@ public class RegisterPanel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblQuizApp.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
+        lblQuizApp.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblQuizApp.setForeground(new java.awt.Color(255, 255, 255));
         lblQuizApp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuizApp.setText("Quiz Application");
@@ -60,36 +60,36 @@ public class RegisterPanel extends javax.swing.JPanel {
         mainRegisterPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true), "LOGIN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(0, 153, 153))); // NOI18N
         mainRegisterPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblUserName.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblUserName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 153, 153));
         lblUserName.setText("Username:");
         mainRegisterPanel.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        lblPassword.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(0, 153, 153));
         lblPassword.setText("Password:");
         mainRegisterPanel.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        emailField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        emailField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         emailField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         mainRegisterPanel.add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 330, 40));
 
-        passwordField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        passwordField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         passwordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         mainRegisterPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 330, 40));
 
-        lblFullname.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblFullname.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblFullname.setForeground(new java.awt.Color(0, 153, 153));
         lblFullname.setText("Fullname:");
         mainRegisterPanel.add(lblFullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        lblEmail.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblEmail.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblEmail.setForeground(new java.awt.Color(0, 153, 153));
         lblEmail.setText("Email:");
         mainRegisterPanel.add(lblEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, -1));
 
         saveButton.setBackground(new java.awt.Color(0, 153, 153));
-        saveButton.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        saveButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         saveButton.setForeground(new java.awt.Color(255, 255, 255));
         saveButton.setText("Save");
         saveButton.addActionListener(new java.awt.event.ActionListener() {
@@ -99,11 +99,11 @@ public class RegisterPanel extends javax.swing.JPanel {
         });
         mainRegisterPanel.add(saveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 280, 170, 40));
 
-        userNameField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        userNameField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         userNameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         mainRegisterPanel.add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 330, 40));
 
-        fullnameField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        fullnameField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         fullnameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         mainRegisterPanel.add(fullnameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, 330, 40));
 
@@ -143,7 +143,7 @@ public class RegisterPanel extends javax.swing.JPanel {
         }
         
         if (!isValidEmail(email)) {
-            showErrorMessage("Email is not valid.");
+            showErrorMessage("Email is not valid!");
             return;
         }
         

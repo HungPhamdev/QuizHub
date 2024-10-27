@@ -62,7 +62,7 @@ public class LoginPanel extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblQuizApp.setFont(new java.awt.Font("Sylfaen", 1, 24)); // NOI18N
+        lblQuizApp.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblQuizApp.setForeground(new java.awt.Color(255, 255, 255));
         lblQuizApp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblQuizApp.setText("Quiz Application");
@@ -77,28 +77,29 @@ public class LoginPanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true), "LOGIN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(0, 153, 153))); // NOI18N
+        jPanel1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblUserName.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblUserName.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblUserName.setForeground(new java.awt.Color(0, 153, 153));
         lblUserName.setText("Username:");
         jPanel1.add(lblUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        lblPassword.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        lblPassword.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         lblPassword.setForeground(new java.awt.Color(0, 153, 153));
         lblPassword.setText("Password:");
         jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, -1));
 
-        userNameField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        userNameField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         userNameField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         jPanel1.add(userNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 30, 330, 40));
 
-        passwordField.setFont(new java.awt.Font("Sylfaen", 0, 18)); // NOI18N
+        passwordField.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         passwordField.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 153), 2, true));
         jPanel1.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 330, 40));
 
         loginButton.setBackground(new java.awt.Color(0, 153, 153));
-        loginButton.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        loginButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         loginButton.setForeground(new java.awt.Color(255, 255, 255));
         loginButton.setText("Login");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
@@ -109,7 +110,7 @@ public class LoginPanel extends javax.swing.JPanel {
         jPanel1.add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, 170, 40));
 
         registerButton.setBackground(new java.awt.Color(102, 102, 102));
-        registerButton.setFont(new java.awt.Font("Sylfaen", 1, 18)); // NOI18N
+        registerButton.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         registerButton.setForeground(new java.awt.Color(255, 255, 255));
         registerButton.setText("Register");
         registerButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));

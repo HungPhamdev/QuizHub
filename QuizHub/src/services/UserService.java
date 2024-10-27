@@ -12,19 +12,19 @@ public class UserService {
         this.userRepository = new UserRepository();
     }
 
-    public void createUser(User user) {
-        userRepository.createUser(user);
+    public int createUser(User user) {
+        return userRepository.createUser(user);
     }
 
-    public void updateUser(User user) {
-        userRepository.updateUser(user);
+    public int updateUser(User user) {
+        return userRepository.updateUser(user);
     }
 
     public List<User> getAllUsers() {
         return userRepository.getAllUsers();
     }
 
-    public void deleteUser(int id) {
-        userRepository.deleteUser(id);
+    public int deleteUser(String username) {
+        return userRepository.deleteUser(username);
     }
 }

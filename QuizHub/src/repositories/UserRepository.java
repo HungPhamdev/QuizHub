@@ -8,7 +8,7 @@ import model.User;
 
 public class UserRepository {
 
-    public void createUser(User user) {
+    public int createUser(User user) {
         String sql = "INSERT INTO Users (UserName, Password, Email, FullName, Role) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -17,25 +17,27 @@ public class UserRepository {
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getFullName());
             preparedStatement.setString(5, user.getRole());
-            preparedStatement.executeUpdate();
+            
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 
-    public void updateUser(User user) {
-        String sql = "UPDATE Users SET UserName = ?, Password = ?, Email = ?, FullName = ?, Role = ? WHERE Id = ?";
+    public int updateUser(User user) {
+        String sql = "UPDATE Users SET Email = ?, FullName = ?, Role = ? WHERE UserName = ?";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getFullName());
-            preparedStatement.setString(5, user.getRole());
-            preparedStatement.setInt(6, user.getId());
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getFullName());
+            preparedStatement.setString(3, user.getRole());
+            preparedStatement.setString(4, user.getUserName());
+            
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
 
@@ -60,14 +62,15 @@ public class UserRepository {
         return users;
     }
 
-    public void deleteUser(int id) {
-        String sql = "DELETE FROM Users WHERE Id = ?";
+    public int deleteUser(String username) {
+        String sql = "DELETE FROM Users WHERE Username = ?";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            preparedStatement.setString(1, username);
+            return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0;
         }
     }
     

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import view.Auth.LoginPanel;
 import view.Auth.RegisterPanel;
+import view.User.UserManagementPanel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -14,6 +15,7 @@ public class MainFrame extends javax.swing.JFrame {
     private LoginPanel loginPanel;
     private HomepagePanel homePanel;
     private RegisterPanel registerPanel;
+    private UserManagementPanel userManagementPanel;
 
     public MainFrame() {
         initComponents();
@@ -23,13 +25,15 @@ public class MainFrame extends javax.swing.JFrame {
 
         // Initialize panels
         loginPanel = new LoginPanel(this);
-        homePanel = new HomepagePanel();
         registerPanel = new RegisterPanel(this);
+        homePanel = new HomepagePanel(this);
+        userManagementPanel = new UserManagementPanel();
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
         add(homePanel, "HomepagePanel");
         add(registerPanel, "RegisterPanel");
+        add(userManagementPanel, "UserManagementPanel1");
 
         // Set initial view
         cardLayout.show(getContentPane(), "LoginPanel");
@@ -43,7 +47,12 @@ public class MainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMaximumSize(getPreferredSize());
+        setMinimumSize(getPreferredSize());
         getContentPane().setLayout(new java.awt.CardLayout());
 
         pack();
@@ -95,7 +104,12 @@ public class MainFrame extends javax.swing.JFrame {
     public void showLoginPanel() {
         cardLayout.show(getContentPane(), "LoginPanel");
     }
+    
+    public void showQuizManagementPanel() {
+        cardLayout.show(getContentPane(), "UserManagementPanel1");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
