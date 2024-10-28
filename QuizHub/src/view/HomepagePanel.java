@@ -15,6 +15,7 @@ public class HomepagePanel extends javax.swing.JPanel {
 
         lblHomepage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        btnQuizManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -26,6 +27,15 @@ public class HomepagePanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnQuizManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuizManagement.setText("Quiz Management");
+        btnQuizManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuizManagementActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnQuizManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
         btnUserManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnUserManagement.setText("User Management");
@@ -39,12 +49,17 @@ public class HomepagePanel extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 70));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
+    private void btnQuizManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagementActionPerformed
         mainFrame.showQuizManagementPanel();
+    }//GEN-LAST:event_btnQuizManagementActionPerformed
+
+    private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
+         mainFrame.showUserManagementPanel();
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnQuizManagement;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHomepage;

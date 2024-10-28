@@ -1,27 +1,34 @@
 package controller;
 
-import model.Question;
-import view.QuizFrame;
-import view.QuestionPanel;
-import view.ResultPanel;
+import java.util.List;
+import model.Quiz;
+import services.QuizService;
 
 public class QuizController {
-    private QuizFrame frame;
-    private Question currentQuestion;
 
-    public QuizController(QuizFrame frame) {
-        this.frame = frame;
-        // Initialize with the first question
-        loadQuestion();
+    private QuizService quizService;
+
+    public QuizController() {
+        this.quizService = new QuizService();
     }
 
-    private void loadQuestion() {
-        // Logic to load question from database
-        // Update view using frame.getQuestionPanel()
+    public int addQuiz(Quiz Quiz) {
+        return quizService.createQuiz(Quiz);
     }
 
-    public void submitAnswer() {
-        // Logic to submit answer and update result
-        // Update view using frame.getResultPanel()
+    public int modifyQuiz(Quiz Quiz) {
+        return quizService.updateQuiz(Quiz);
+    }
+
+    public List<Quiz> listQuizzes() {
+        return quizService.getAllQuizzes();
+    }
+
+    public int removeQuiz(int id) {
+        return quizService.deleteQuiz(id);
+    }
+
+    public boolean isTitleExists(String title) {
+        return quizService.isTitleExists(title);
     }
 }

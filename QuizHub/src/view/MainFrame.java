@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import view.Auth.LoginPanel;
 import view.Auth.RegisterPanel;
+import view.Quiz.QuizManagementPanel;
 import view.User.UserManagementPanel;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -16,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
     private HomepagePanel homePanel;
     private RegisterPanel registerPanel;
     private UserManagementPanel userManagementPanel;
+    private QuizManagementPanel quizManagementPanel;
 
     public MainFrame() {
         initComponents();
@@ -28,12 +30,14 @@ public class MainFrame extends javax.swing.JFrame {
         registerPanel = new RegisterPanel(this);
         homePanel = new HomepagePanel(this);
         userManagementPanel = new UserManagementPanel();
+        quizManagementPanel = new QuizManagementPanel();
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
         add(homePanel, "HomepagePanel");
         add(registerPanel, "RegisterPanel");
-        add(userManagementPanel, "UserManagementPanel1");
+        add(userManagementPanel, "UserManagementPanel");
+        add(quizManagementPanel, "QuizManagementPanel");
 
         // Set initial view
         cardLayout.show(getContentPane(), "LoginPanel");
@@ -105,8 +109,12 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout.show(getContentPane(), "LoginPanel");
     }
     
+    public void showUserManagementPanel() {
+        cardLayout.show(getContentPane(), "UserManagementPanel");
+    }
+    
     public void showQuizManagementPanel() {
-        cardLayout.show(getContentPane(), "UserManagementPanel1");
+        cardLayout.show(getContentPane(), "QuizManagementPanel");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

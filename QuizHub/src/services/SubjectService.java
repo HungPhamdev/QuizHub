@@ -6,7 +6,7 @@ import repositories.SubjectRepository;
 
 
 public class SubjectService {
-private SubjectRepository subjectRepository;
+    private SubjectRepository subjectRepository;
 
     public SubjectService() {
         this.subjectRepository = new SubjectRepository();

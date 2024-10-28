@@ -1,7 +1,6 @@
 package view.User;
 
 import controller.UserController;
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -274,7 +273,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
             txtUsername.setText(tblUser.getValueAt(row, 0).toString());
             txtFullname.setText(tblUser.getValueAt(row, 1).toString());
             txtEmail.setText(tblUser.getValueAt(row, 2).toString());
-            
+
             var role = tblUser.getValueAt(row, 3);
             role = role == null ? "Chọn 1 option" : role.toString();
             cbxRole.setSelectedItem(tblUser.getValueAt(row, 3).toString());
