@@ -43,7 +43,7 @@ public class UserRepository {
 
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM Users (NOLOCK)";
+        String sql = "SELECT * FROM Users (NOLOCK) WHERE isDeleted = 0";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
@@ -63,7 +63,7 @@ public class UserRepository {
     }
 
     public int deleteUser(String username) {
-        String sql = "DELETE FROM Users WHERE Username = ?";
+        String sql = "UPDATE Users SET isDeleted = 1 WHERE Username = ?";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, username);
