@@ -2,11 +2,11 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Question {
+public class Option {
+    private int optionId;
     private int questionId;
-    private int quizId;
-    private String title;
-    private String questionType;
+    private String content;
+    private boolean isCorrect;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
@@ -14,17 +14,17 @@ public class Question {
     private Boolean isDeleted;
 
     // Getters and Setters
+    public int getOptionId() { return optionId; }
+    public void setOptionId(int optionId) { this.optionId = optionId; }
+
     public int getQuestionId() { return questionId; }
     public void setQuestionId(int questionId) { this.questionId = questionId; }
 
-    public int getQuizId() { return quizId; }
-    public void setQuizId(int quizId) { this.quizId = quizId; }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
-
-    public String getQuestionType() { return questionType; }
-    public void setQuestionType(String questionType) { this.questionType = questionType; }
+    public boolean isCorrect() { return isCorrect; }
+    public void setCorrect(boolean isCorrect) { this.isCorrect = isCorrect; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
