@@ -27,4 +27,8 @@ public class QuestionController {
     public int removeQuestion(int questionId) {
         return questionService.deleteQuestion(questionId);
     }
+    
+    public boolean isTitleExists(String title){
+        return questionService.isTitleExists(title);
+    }
 }

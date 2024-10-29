@@ -72,4 +72,19 @@ public class QuestionRepository {
             return 0;
         }
     }
+    
+    public boolean isTitleExists(String title) {
+        String sql = "SELECT 1 FROM Questions (NOLOCK) WHERE IsDeleted = 0 AND Title = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, title);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

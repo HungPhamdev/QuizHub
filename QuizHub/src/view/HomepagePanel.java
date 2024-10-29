@@ -15,27 +15,28 @@ public class HomepagePanel extends javax.swing.JPanel {
 
         lblHomepage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnQuizManagement = new javax.swing.JButton();
+        btnQuestionManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
+        btnQuizManagement1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblHomepage.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
         lblHomepage.setText("Welcome to the Quiz Application!");
-        add(lblHomepage, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, -1, -1));
+        add(lblHomepage, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, -1, -1));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnQuizManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnQuizManagement.setText("Quiz Management");
-        btnQuizManagement.addActionListener(new java.awt.event.ActionListener() {
+        btnQuestionManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuestionManagement.setText("Question Management");
+        btnQuestionManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuizManagementActionPerformed(evt);
+                btnQuestionManagementActionPerformed(evt);
             }
         });
-        jPanel1.add(btnQuizManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        jPanel1.add(btnQuestionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 200, -1));
 
         btnUserManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnUserManagement.setText("User Management");
@@ -46,20 +47,34 @@ public class HomepagePanel extends javax.swing.JPanel {
         });
         jPanel1.add(btnUserManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
+        btnQuizManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuizManagement1.setText("Quiz Management");
+        btnQuizManagement1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuizManagement1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnQuizManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 70));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnQuizManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagementActionPerformed
-        mainFrame.showQuizManagementPanel();
-    }//GEN-LAST:event_btnQuizManagementActionPerformed
+    private void btnQuestionManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuestionManagementActionPerformed
+        mainFrame.showQuestionManagementPanel();
+    }//GEN-LAST:event_btnQuestionManagementActionPerformed
 
     private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
-         mainFrame.showUserManagementPanel();
+        mainFrame.showUserManagementPanel();
     }//GEN-LAST:event_btnUserManagementActionPerformed
+
+    private void btnQuizManagement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagement1ActionPerformed
+        mainFrame.showQuizManagementPanel();
+    }//GEN-LAST:event_btnQuizManagement1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnQuizManagement;
+    private javax.swing.JButton btnQuestionManagement;
+    private javax.swing.JButton btnQuizManagement1;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHomepage;

@@ -1,11 +1,11 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import view.Auth.LoginPanel;
 import view.Auth.RegisterPanel;
+import view.Question.QuestionManagementPanel;
 import view.Quiz.QuizManagementPanel;
 import view.User.UserManagementPanel;
 
@@ -18,6 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     private RegisterPanel registerPanel;
     private UserManagementPanel userManagementPanel;
     private QuizManagementPanel quizManagementPanel;
+    private QuestionManagementPanel questionManagementPanel;
 
     public MainFrame() {
         initComponents();
@@ -31,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
         homePanel = new HomepagePanel(this);
         userManagementPanel = new UserManagementPanel();
         quizManagementPanel = new QuizManagementPanel();
+        questionManagementPanel = new QuestionManagementPanel();
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
@@ -38,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         add(registerPanel, "RegisterPanel");
         add(userManagementPanel, "UserManagementPanel");
         add(quizManagementPanel, "QuizManagementPanel");
+        add(questionManagementPanel, "QuestionManagementPanel");
 
         // Set initial view
         cardLayout.show(getContentPane(), "LoginPanel");
@@ -104,17 +107,21 @@ public class MainFrame extends javax.swing.JFrame {
     public void showRegisterPanel() {
         cardLayout.show(getContentPane(), "RegisterPanel");
     }
-    
+
     public void showLoginPanel() {
         cardLayout.show(getContentPane(), "LoginPanel");
     }
-    
+
     public void showUserManagementPanel() {
         cardLayout.show(getContentPane(), "UserManagementPanel");
     }
-    
+
     public void showQuizManagementPanel() {
         cardLayout.show(getContentPane(), "QuizManagementPanel");
+    }
+
+    public void showQuestionManagementPanel() {
+        cardLayout.show(getContentPane(), "QuestionManagementPanel");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
