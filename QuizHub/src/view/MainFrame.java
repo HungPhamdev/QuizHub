@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import view.Auth.LoginPanel;
 import view.Auth.RegisterPanel;
+import view.Option.OptionManagementPanel;
 import view.Question.QuestionManagementPanel;
 import view.Quiz.QuizManagementPanel;
 import view.User.UserManagementPanel;
@@ -19,6 +20,7 @@ public class MainFrame extends javax.swing.JFrame {
     private UserManagementPanel userManagementPanel;
     private QuizManagementPanel quizManagementPanel;
     private QuestionManagementPanel questionManagementPanel;
+    private OptionManagementPanel optionManagementPanel;
 
     public MainFrame() {
         initComponents();
@@ -33,6 +35,7 @@ public class MainFrame extends javax.swing.JFrame {
         userManagementPanel = new UserManagementPanel();
         quizManagementPanel = new QuizManagementPanel();
         questionManagementPanel = new QuestionManagementPanel();
+        optionManagementPanel = new OptionManagementPanel();
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
@@ -41,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         add(userManagementPanel, "UserManagementPanel");
         add(quizManagementPanel, "QuizManagementPanel");
         add(questionManagementPanel, "QuestionManagementPanel");
+        add(optionManagementPanel, "OptionManagementPanel");
 
         // Set initial view
         cardLayout.show(getContentPane(), "LoginPanel");
@@ -122,6 +126,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     public void showQuestionManagementPanel() {
         cardLayout.show(getContentPane(), "QuestionManagementPanel");
+    }
+    
+    public void showOptionManagementPanel() {
+        cardLayout.show(getContentPane(), "OptionManagementPanel");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

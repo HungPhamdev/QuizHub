@@ -15,9 +15,10 @@ public class HomepagePanel extends javax.swing.JPanel {
 
         lblHomepage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnQuestionManagement = new javax.swing.JButton();
         btnUserManagement = new javax.swing.JButton();
         btnQuizManagement1 = new javax.swing.JButton();
+        btnQuestionManagement1 = new javax.swing.JButton();
+        btnOptionManagement = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -28,15 +29,6 @@ public class HomepagePanel extends javax.swing.JPanel {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnQuestionManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnQuestionManagement.setText("Question Management");
-        btnQuestionManagement.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuestionManagementActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnQuestionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 200, -1));
 
         btnUserManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnUserManagement.setText("User Management");
@@ -56,12 +48,30 @@ public class HomepagePanel extends javax.swing.JPanel {
         });
         jPanel1.add(btnQuizManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
 
+        btnQuestionManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuestionManagement1.setText("Question Management");
+        btnQuestionManagement1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuestionManagement1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnQuestionManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 200, -1));
+
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 70));
+
+        btnOptionManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnOptionManagement.setText("Option Management");
+        btnOptionManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOptionManagementActionPerformed(evt);
+            }
+        });
+        add(btnOptionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 200, -1));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnQuestionManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuestionManagementActionPerformed
-        mainFrame.showQuestionManagementPanel();
-    }//GEN-LAST:event_btnQuestionManagementActionPerformed
+    private void btnOptionManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionManagementActionPerformed
+        mainFrame.showOptionManagementPanel();
+    }//GEN-LAST:event_btnOptionManagementActionPerformed
 
     private void btnUserManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserManagementActionPerformed
         mainFrame.showUserManagementPanel();
@@ -71,9 +81,14 @@ public class HomepagePanel extends javax.swing.JPanel {
         mainFrame.showQuizManagementPanel();
     }//GEN-LAST:event_btnQuizManagement1ActionPerformed
 
+    private void btnQuestionManagement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuestionManagement1ActionPerformed
+        mainFrame.showQuestionManagementPanel();
+    }//GEN-LAST:event_btnQuestionManagement1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnQuestionManagement;
+    private javax.swing.JButton btnOptionManagement;
+    private javax.swing.JButton btnQuestionManagement1;
     private javax.swing.JButton btnQuizManagement1;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JPanel jPanel1;
