@@ -16,9 +16,10 @@ public class HomepagePanel extends javax.swing.JPanel {
         lblHomepage = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         btnUserManagement = new javax.swing.JButton();
-        btnQuizManagement1 = new javax.swing.JButton();
-        btnQuestionManagement1 = new javax.swing.JButton();
+        btnSubjectManagement = new javax.swing.JButton();
         btnOptionManagement = new javax.swing.JButton();
+        btnQuestionManagement1 = new javax.swing.JButton();
+        btnQuizManagement = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -39,25 +40,14 @@ public class HomepagePanel extends javax.swing.JPanel {
         });
         jPanel1.add(btnUserManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
-        btnQuizManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnQuizManagement1.setText("Quiz Management");
-        btnQuizManagement1.addActionListener(new java.awt.event.ActionListener() {
+        btnSubjectManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnSubjectManagement.setText("Subject Management");
+        btnSubjectManagement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuizManagement1ActionPerformed(evt);
+                btnSubjectManagementActionPerformed(evt);
             }
         });
-        jPanel1.add(btnQuizManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
-
-        btnQuestionManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        btnQuestionManagement1.setText("Question Management");
-        btnQuestionManagement1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuestionManagement1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnQuestionManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 20, 200, -1));
-
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 590, 70));
+        jPanel1.add(btnSubjectManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 20, -1, -1));
 
         btnOptionManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnOptionManagement.setText("Option Management");
@@ -66,7 +56,27 @@ public class HomepagePanel extends javax.swing.JPanel {
                 btnOptionManagementActionPerformed(evt);
             }
         });
-        add(btnOptionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 200, -1));
+        jPanel1.add(btnOptionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, 200, -1));
+
+        btnQuestionManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuestionManagement1.setText("Question Management");
+        btnQuestionManagement1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuestionManagement1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnQuestionManagement1, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 200, -1));
+
+        btnQuizManagement.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        btnQuizManagement.setText("Quiz Management");
+        btnQuizManagement.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuizManagementActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnQuizManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1150, 70));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOptionManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOptionManagementActionPerformed
@@ -77,19 +87,24 @@ public class HomepagePanel extends javax.swing.JPanel {
         mainFrame.showUserManagementPanel();
     }//GEN-LAST:event_btnUserManagementActionPerformed
 
-    private void btnQuizManagement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagement1ActionPerformed
-        mainFrame.showQuizManagementPanel();
-    }//GEN-LAST:event_btnQuizManagement1ActionPerformed
+    private void btnSubjectManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubjectManagementActionPerformed
+        mainFrame.showSubjectManagementPanel();
+    }//GEN-LAST:event_btnSubjectManagementActionPerformed
 
     private void btnQuestionManagement1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuestionManagement1ActionPerformed
         mainFrame.showQuestionManagementPanel();
     }//GEN-LAST:event_btnQuestionManagement1ActionPerformed
 
+    private void btnQuizManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagementActionPerformed
+        mainFrame.showQuizManagementPanel();
+    }//GEN-LAST:event_btnQuizManagementActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOptionManagement;
     private javax.swing.JButton btnQuestionManagement1;
-    private javax.swing.JButton btnQuizManagement1;
+    private javax.swing.JButton btnQuizManagement;
+    private javax.swing.JButton btnSubjectManagement;
     private javax.swing.JButton btnUserManagement;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHomepage;

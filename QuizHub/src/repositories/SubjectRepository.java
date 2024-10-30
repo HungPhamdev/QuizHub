@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Subject;
 
-
 public class SubjectRepository {
+
     public int createSubject(Subject subject) {
         String sql = "INSERT INTO Subjects (SubjectName, Description) VALUES (?, ?)";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, subject.getSubjectName());
             preparedStatement.setString(2, subject.getDescription());
-            
+
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,7 +32,7 @@ public class SubjectRepository {
             preparedStatement.setString(1, subject.getSubjectName());
             preparedStatement.setString(2, subject.getDescription());
             preparedStatement.setInt(3, subject.getId());
-            
+
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -68,5 +68,20 @@ public class SubjectRepository {
             e.printStackTrace();
             return 0;
         }
-    }    
+    }
+
+    public boolean isSubjectNameExists(String subjectName) {
+        String sql = "SELECT 1 FROM Subjects (NOLOCK) WHERE IsDeleted = 0 AND SubjectName = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, subjectName);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

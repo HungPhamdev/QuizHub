@@ -27,4 +27,8 @@ public class SubjectController {
     public int removeSubject(int id) {
         return subjectService.deleteSubject(id);
     }
+    
+    public boolean isSubjectNameExists(String subjectName) {
+        return subjectService.isSubjectNameExists(subjectName);
+    }
 }

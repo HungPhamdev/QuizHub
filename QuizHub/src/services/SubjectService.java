@@ -4,8 +4,8 @@ import java.util.List;
 import model.Subject;
 import repositories.SubjectRepository;
 
-
 public class SubjectService {
+
     private SubjectRepository subjectRepository;
 
     public SubjectService() {
@@ -26,5 +26,9 @@ public class SubjectService {
 
     public int deleteSubject(int id) {
         return subjectRepository.deleteSubject(id);
+    }
+
+    public boolean isSubjectNameExists(String subjectName) {
+        return subjectRepository.isSubjectNameExists(subjectName);
     }
 }
