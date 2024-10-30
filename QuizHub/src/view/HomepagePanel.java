@@ -18,6 +18,7 @@ public class HomepagePanel extends javax.swing.JPanel {
         btnUserManagement = new javax.swing.JButton();
         btnSubjectManagement = new javax.swing.JButton();
         btnOptionManagement = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         btnQuestionManagement1 = new javax.swing.JButton();
         btnQuizManagement = new javax.swing.JButton();
 
@@ -56,6 +57,15 @@ public class HomepagePanel extends javax.swing.JPanel {
                 btnOptionManagementActionPerformed(evt);
             }
         });
+        add(btnOptionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 20, 200, -1));
+
+        jButton1.setText("Quizz");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, -1, -1));
         jPanel1.add(btnOptionManagement, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 20, 200, -1));
 
         btnQuestionManagement1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
@@ -95,6 +105,10 @@ public class HomepagePanel extends javax.swing.JPanel {
         mainFrame.showQuestionManagementPanel();
     }//GEN-LAST:event_btnQuestionManagement1ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        mainFrame.showQuizAppPanel();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
     private void btnQuizManagementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuizManagementActionPerformed
         mainFrame.showQuizManagementPanel();
     }//GEN-LAST:event_btnQuizManagementActionPerformed
@@ -106,6 +120,7 @@ public class HomepagePanel extends javax.swing.JPanel {
     private javax.swing.JButton btnQuizManagement;
     private javax.swing.JButton btnSubjectManagement;
     private javax.swing.JButton btnUserManagement;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblHomepage;
     // End of variables declaration//GEN-END:variables
