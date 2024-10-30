@@ -31,4 +31,8 @@ public class SubjectController {
     public boolean isSubjectNameExists(String subjectName) {
         return subjectService.isSubjectNameExists(subjectName);
     }
+    
+    public String findSubjectNameById(int id){
+        return subjectService.findSubjectNameById(id);
+    }
 }

@@ -84,4 +84,19 @@ public class SubjectRepository {
         }
         return false;
     }
+    
+    public String findSubjectNameById(int id) {
+        String sql = "SELECT SubjectName FROM Subjects (NOLOCK) WHERE IsDeleted = 0 AND Id = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("SubjectName");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

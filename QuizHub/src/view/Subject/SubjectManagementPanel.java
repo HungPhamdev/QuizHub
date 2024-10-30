@@ -126,31 +126,15 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 100));
 
         tblSubject.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tblSubject.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "SubjectName", "Description"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        tblSubject.setModel(new SubjectTableModel());
+        tblSubject.setColumnSelectionAllowed(true);
         tblSubject.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblSubjectMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tblSubject);
+        tblSubject.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 950, 150));
     }// </editor-fold>//GEN-END:initComponents
@@ -183,7 +167,7 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Please select a subject to update!");
             return;
         }
-
+        int subjectId = ((SubjectTableModel) tblSubject.getModel()).getSubjectId(selectedRow);
         subjectName = txtSubjectName.getText();
         description = txtDescription.getText();
 
@@ -192,31 +176,35 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
             return;
         }
 
+        String subjectNameInDB = this.subjectController.findSubjectNameById(subjectId);
+
         boolean isSubjectNameExists = this.subjectController.isSubjectNameExists(subjectName);
-        if (isSubjectNameExists) {
+        if (!subjectName.equals(subjectNameInDB) && isSubjectNameExists) {
             showErrorMessage("Subject name is exists!");
             return;
         }
 
-        modifySubject(subjectName, description);
+        modifySubject(subjectId, subjectName, description);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void tblSubjectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSubjectMouseClicked
         int row = tblSubject.getSelectedRow();
         if (row != -1) {
-            txtSubjectName.setText(tblSubject.getValueAt(row, 0).toString());
-            txtDescription.setText(tblSubject.getValueAt(row, 1).toString());
+            txtSubjectName.setText(tblSubject.getValueAt(row, 1).toString());
+            txtDescription.setText(tblSubject.getValueAt(row, 2).toString());
         }
     }//GEN-LAST:event_tblSubjectMouseClicked
 
     private void loadSubjectData() {
-        DefaultTableModel subjectModel = (DefaultTableModel) tblSubject.getModel();
+        SubjectTableModel subjectModel = (SubjectTableModel) tblSubject.getModel();
         subjectModel.setRowCount(0); // Clear existing rows
 
         List<Subject> subjects = subjectController.listSubjects();
         for (Subject subject : subjects) {
-            subjectModel.addRow(new Object[]{subject.getSubjectName(), subject.getDescription()});
+            subjectModel.addSubject(subject.getId(), subject.getSubjectName(), subject.getDescription());
         }
+
+        hideColumnByIndex(tblSubject, 0);
     }
 
     private void addSubject(String subjectName, String description) {
@@ -232,8 +220,9 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
         clearFields();
     }
 
-    private void modifySubject(String subjectName, String description) {
+    private void modifySubject(int subjectId, String subjectName, String description) {
         Subject subject = new Subject();
+        subject.setId(subjectId);
         subject.setSubjectName(subjectName);
         subject.setDescription(description);
 
@@ -252,8 +241,7 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
             return;
         }
 
-        DefaultTableModel subjectModel = (DefaultTableModel) tblSubject.getModel();
-        int subjectId = (int) subjectModel.getValueAt(selectedRow, 0);
+        int subjectId = ((SubjectTableModel) tblSubject.getModel()).getSubjectId(selectedRow);
 
         int deleteResult = subjectController.removeSubject(subjectId);
         String message = deleteResult > 0 ? "successfully" : "failed";
@@ -270,6 +258,12 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
 
     private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void hideColumnByIndex(javax.swing.JTable jTable, int columnIndex){
+        jTable.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setWidth(0);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

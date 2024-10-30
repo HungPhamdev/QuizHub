@@ -135,18 +135,20 @@ public class MainFrame extends javax.swing.JFrame {
     public void showQuestionManagementPanel() {
         cardLayout.show(getContentPane(), "QuestionManagementPanel");
     }
-    
+
     public void showOptionManagementPanel() {
         cardLayout.show(getContentPane(), "OptionManagementPanel");
     }
-    
-     public void showQuizAppPanel() {
+
+    public void showQuizAppPanel() {
         cardLayout.show(getContentPane(), "QuizAppView");
+    }
+
     public void showSubjectManagementPanel() {
         cardLayout.show(getContentPane(), "SubjectManagementPanel");
     }
 
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
