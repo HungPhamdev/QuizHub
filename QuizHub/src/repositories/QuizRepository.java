@@ -44,7 +44,7 @@ public class QuizRepository {
 
     public List<Quiz> getAllQuizzes() {
         List<Quiz> quizzes = new ArrayList<>();
-        String sql = "SELECT Q.QuizId, Q.Title, Q.SubjectId, S.SubjectName, Q.Level FROM Quizzes (NOLOCK) Q "
+        String sql = "SELECT Q.QuizId, Q.Title, Q.SubjectId, S.SubjectName, Q.Level, Q.Duration FROM Quizzes (NOLOCK) Q "
                     + " JOIN Subjects (NOLOCK) S ON Q.SubjectId = S.Id "
                     + " WHERE Q.isDeleted = 0";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -56,6 +56,7 @@ public class QuizRepository {
                 quiz.setSubjectId(resultSet.getInt("SubjectId"));
                 quiz.setSubjectName(resultSet.getString("SubjectName"));
                 quiz.setLevel(resultSet.getString("Level"));
+                quiz.setDuration(resultSet.getInt("Duration"));
                 quizzes.add(quiz);
             }
         } catch (SQLException e) {

@@ -26,11 +26,11 @@ GO
 
 SET IDENTITY_INSERT [dbo].[Quizzes] ON 
 GO
-INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted]) VALUES (1, N'Toán nhập môn', 1, N'Easy', CAST(N'2024-10-31T10:43:15.180' AS DateTime), NULL, CAST(N'2024-10-31T10:47:44.127' AS DateTime), NULL, 0)
+INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted], [Duration]) VALUES (1, N'Toán nhập môn', 1, N'Easy', CAST(N'2024-10-31T10:43:15.180' AS DateTime), NULL, CAST(N'2024-10-31T10:47:44.127' AS DateTime), NULL, 0, 30)
 GO
-INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted]) VALUES (2, N'Toán rời rạc', 1, N'Hard', CAST(N'2024-10-31T10:43:50.013' AS DateTime), NULL, NULL, NULL, 0)
+INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted], [Duration]) VALUES (2, N'Toán rời rạc', 1, N'Hard', CAST(N'2024-10-31T10:43:50.013' AS DateTime), NULL, NULL, NULL, 0, 30)
 GO
-INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted]) VALUES (3, N'LS', 2, N'Medium', CAST(N'2024-10-31T10:46:49.223' AS DateTime), NULL, CAST(N'2024-10-31T10:52:48.407' AS DateTime), NULL, 0)
+INSERT [dbo].[Quizzes] ([quizId], [title], [subjectId], [level], [createdAt], [createdBy], [updatedAt], [updatedBy], [isDeleted], [Duration]) VALUES (3, N'LS', 2, N'Medium', CAST(N'2024-10-31T10:46:49.223' AS DateTime), NULL, CAST(N'2024-10-31T10:52:48.407' AS DateTime), NULL, 0, 45)
 GO
 SET IDENTITY_INSERT [dbo].[Quizzes] OFF
 GO

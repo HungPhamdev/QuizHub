@@ -14,6 +14,7 @@ public class Quiz {
     private LocalDateTime updatedAt;
     private String updatedBy;
     private Boolean isDeleted;
+    private int duration;
 
     // Getters and Setters
     public int getQuizId() { return quizId; }
@@ -45,4 +46,7 @@ public class Quiz {
     
     public Boolean getIsDeleted() { return isDeleted; }
     public void setIsDeleted(Boolean isDeleted) { this.isDeleted = isDeleted; }
+    
+    public int getDuration() { return duration; }
+    public void setDuration(int duration) { this.duration = duration; }
 }

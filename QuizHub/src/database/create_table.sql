@@ -64,6 +64,7 @@ CREATE TABLE [dbo].[Quizzes](
 	[updatedAt] [datetime] NULL,
 	[updatedBy] [varchar](50) NULL,
 	[isDeleted] [bit] NULL,
+        [Duration] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[quizId] ASC

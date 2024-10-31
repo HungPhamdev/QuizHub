@@ -11,6 +11,7 @@ import view.Quiz.QuizAppView;
 import view.Quiz.QuizManagementPanel;
 import view.Subject.SubjectManagementPanel;
 import view.User.UserManagementPanel;
+import view.Quiz.AvailableQuizPanel;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -25,6 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
     private OptionManagementPanel optionManagementPanel;
     private QuizAppView quizAppView;
     private SubjectManagementPanel subjectManagementPanel;
+    private AvailableQuizPanel availableQuizPanel;
 
     public MainFrame() {
         initComponents();
@@ -42,6 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
         optionManagementPanel = new OptionManagementPanel(this);
         quizAppView = new QuizAppView();
         subjectManagementPanel = new SubjectManagementPanel(this);
+        availableQuizPanel = new AvailableQuizPanel();
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
@@ -53,6 +56,7 @@ public class MainFrame extends javax.swing.JFrame {
         add(optionManagementPanel, "OptionManagementPanel");
         add(quizAppView, "QuizAppView");
         add(subjectManagementPanel, "SubjectManagementPanel");
+        add(availableQuizPanel, "AvailableQuizPanel");
 
         // Set initial view
         cardLayout.show(getContentPane(), "LoginPanel");
@@ -145,6 +149,9 @@ public class MainFrame extends javax.swing.JFrame {
         cardLayout.show(getContentPane(), "SubjectManagementPanel");
     }
 
+    public void showAvailableQuizManagementPanel() {
+        cardLayout.show(getContentPane(), "AvailableQuizPanel");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel2;
