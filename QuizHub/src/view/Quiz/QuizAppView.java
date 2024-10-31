@@ -6,17 +6,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
+import repositories.QuestionInitializer;
 
 public class QuizAppView extends JPanel {
+
     private int currentQuestionIndex = 0;
     private String selectedSubject;
-        private int score = 0;
-
+    private int score = 0;
 
     // Define questions and options by subject
-    private Map<String, String[]> questionsMap = new HashMap<>();
-    private Map<String, String[][]> optionsMap = new HashMap<>();
-    private Map<String, int[]> correctAnswersMap = new HashMap<>();
+    private Map<String, String[]> questionsMap;
+    private Map<String, String[][]> optionsMap;
+    private Map<String, int[]> correctAnswersMap;
 
     private JLabel questionLabel;
     private JRadioButton[] optionButtons;
@@ -25,49 +26,10 @@ public class QuizAppView extends JPanel {
     public QuizAppView() {
         setLayout(new BorderLayout());
         setBackground(new Color(245, 245, 245));
-        initializeQuestions();
+        questionsMap = QuestionInitializer.initializeQuestions();
+        optionsMap = QuestionInitializer.initializeOptions();
+        correctAnswersMap = QuestionInitializer.initializeCorrectAnswers();
         showSubjectSelection();
-    }
-
-    private void initializeQuestions() {
-        // Math questions
-        questionsMap.put("Math", new String[]{
-            "What is 2 + 2?", 
-            "What is 10 / 2?", 
-            "What is the square root of 16?"
-        });
-        optionsMap.put("Math", new String[][]{
-            {"4", "3", "2", "1"},
-            {"10", "5", "3", "2"},
-            {"2", "4", "6", "8"}
-        });
-        correctAnswersMap.put("Math", new int[]{0, 1, 1});
-
-        // English questions
-        questionsMap.put("English", new String[]{
-            "What is the synonym of 'happy'?", 
-            "What is the antonym of 'big'?",
-            "What is a noun?"
-        });
-        optionsMap.put("English", new String[][]{
-            {"Sad", "Joyful", "Angry", "Funny"},
-            {"Small", "Huge", "Tiny", "Large"},
-            {"An action", "A place", "A thing or person", "A description"}
-        });
-        correctAnswersMap.put("English", new int[]{1, 0, 2});
-
-        // Physics questions
-        questionsMap.put("Physics", new String[]{
-            "What is the speed of light?", 
-            "What is Newton's first law?",
-            "What is the unit of force?"
-        });
-        optionsMap.put("Physics", new String[][]{
-            {"300,000 km/s", "150,000 km/s", "500,000 km/s", "1,000 km/s"},
-            {"Inertia", "Gravity", "Relativity", "Energy"},
-            {"Joule", "Newton", "Watt", "Pascal"}
-        });
-        correctAnswersMap.put("Physics", new int[]{0, 0, 1});
     }
 
     private void showSubjectSelection() {
@@ -80,9 +42,9 @@ public class QuizAppView extends JPanel {
         label.setHorizontalAlignment(SwingConstants.CENTER);
         add(label, BorderLayout.NORTH);
 
-        JButton mathButton = createStyledButton("Math");
-        JButton englishButton = createStyledButton("English");
-        JButton physicsButton = createStyledButton("Physics");
+        JButton mathButton = createStyledButton("Toán");
+        JButton englishButton = createStyledButton("Tiếng Anh");
+        JButton physicsButton = createStyledButton("Vật Lý");
 
         subjectPanel.add(mathButton);
         subjectPanel.add(englishButton);
@@ -90,9 +52,9 @@ public class QuizAppView extends JPanel {
 
         add(subjectPanel, BorderLayout.CENTER);
 
-        mathButton.addActionListener(e -> startQuiz("Math"));
-        englishButton.addActionListener(e -> startQuiz("English"));
-        physicsButton.addActionListener(e -> startQuiz("Physics"));
+        mathButton.addActionListener(e -> startQuiz("Toán"));
+        englishButton.addActionListener(e -> startQuiz("Tiếng Anh"));
+        physicsButton.addActionListener(e -> startQuiz("Vật Lý"));
     }
 
     private JButton createStyledButton(String text) {
@@ -123,7 +85,7 @@ public class QuizAppView extends JPanel {
                 BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1)
         ));
         optionsPanel.setBackground(new Color(255, 255, 255));
-        
+
         optionButtons = new JRadioButton[4];
         ButtonGroup group = new ButtonGroup();
 
@@ -164,30 +126,39 @@ public class QuizAppView extends JPanel {
     }
 
     private void showResults() {
-        String[] questions = questionsMap.get(selectedSubject);
         int[] correctAnswers = correctAnswersMap.get(selectedSubject);
 
-        for (int i = 0; i < questions.length; i++) {
+        // Only increment the score for valid selections
+        for (int i = 0; i < currentQuestionIndex; i++) {
+            // Check if the user selected the correct answer for each question answered
             if (optionButtons[correctAnswers[i]].isSelected()) {
                 score++;
             }
         }
 
-        JOptionPane.showMessageDialog(this, "Quiz Finished! You scored " + score + " out of " + questions.length + ".");
+        // Display the results, using currentQuestionIndex for the count of questions answered
+        JOptionPane.showMessageDialog(this, "Quiz Finished! You scored " + score + " out of " + currentQuestionIndex + ".");
         System.exit(0);
     }
 
     private class NextButtonListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < optionButtons.length; i++) {
                 if (optionButtons[i].isSelected()) {
+                    // Check if the selected option is the correct answer
+                    int[] correctAnswers = correctAnswersMap.get(selectedSubject);
+                    if (i == correctAnswers[currentQuestionIndex]) {
+                        score++;  // Increment score for correct answer
+                    }
                     currentQuestionIndex++;
-                    showQuestion();
+                    showQuestion();  // Show the next question
                     return;
                 }
             }
             JOptionPane.showMessageDialog(QuizAppView.this, "Please select an answer.");
         }
     }
+
 }
