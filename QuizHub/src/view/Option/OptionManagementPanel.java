@@ -1,23 +1,35 @@
 package view.Option;
 
 import controller.OptionController;
+import controller.QuestionController;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Option;
+import model.Question;
+import view.MainFrame;
 
 public class OptionManagementPanel extends javax.swing.JPanel {
 
+    private MainFrame mainFrame;
     private final OptionController optionController;
+    private final QuestionController questionController;
     private int questionId;
     private String content;
     private boolean isCorrect;
+    private Map<String, Integer> questionMap = new HashMap<>();
 
-    public OptionManagementPanel() {
+    public OptionManagementPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         optionController = new OptionController();
+        questionController = new QuestionController();
 
         initComponents();
 
+        loadCbbQuestions();
         loadOptionData();
     }
 
@@ -35,9 +47,10 @@ public class OptionManagementPanel extends javax.swing.JPanel {
         btnAdd = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
-        txtQuestionId = new javax.swing.JTextField();
         txtContent = new javax.swing.JTextField();
         cbIsCorrect = new javax.swing.JCheckBox();
+        btnBackToHome = new javax.swing.JButton();
+        cbbQuestionName = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -66,8 +79,8 @@ public class OptionManagementPanel extends javax.swing.JPanel {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("QuestionId:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 90, 30));
+        jLabel1.setText("Question Name:");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 30));
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Content:");
@@ -113,9 +126,6 @@ public class OptionManagementPanel extends javax.swing.JPanel {
         });
         jPanel2.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, -1, 30));
 
-        txtQuestionId.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPanel2.add(txtQuestionId, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 260, 30));
-
         txtContent.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jPanel2.add(txtContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 260, 30));
 
@@ -126,6 +136,18 @@ public class OptionManagementPanel extends javax.swing.JPanel {
             }
         });
         jPanel2.add(cbIsCorrect, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, -1, -1));
+
+        btnBackToHome.setBackground(new java.awt.Color(204, 204, 204));
+        btnBackToHome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBackToHome.setText("<- Back to Home");
+        btnBackToHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToHomeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBackToHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 200, -1, -1));
+
+        jPanel2.add(cbbQuestionName, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 260, 30));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 950, 240));
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -141,25 +163,7 @@ public class OptionManagementPanel extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 100));
 
         tblOption.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tblOption.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "QuestionId", "Content", "IsCorrect"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Boolean.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        tblOption.setModel(new OptionTableModel());
         tblOption.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblOptionMouseClicked(evt);
@@ -175,9 +179,10 @@ public class OptionManagementPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        questionId = Integer.parseInt(txtQuestionId.getText());
         content = txtContent.getText();
-        isCorrect = Boolean.parseBoolean(cbIsCorrect.getText());
+        isCorrect = cbIsCorrect.isSelected();
+        String selectedQuestionName = (String) cbbQuestionName.getSelectedItem();
+        questionId = questionMap.get(selectedQuestionName);
 
         if (questionId <= 0) {
             showErrorMessage("Question Id is required!");
@@ -203,9 +208,11 @@ public class OptionManagementPanel extends javax.swing.JPanel {
             return;
         }
 
-        questionId = Integer.parseInt(txtQuestionId.getText());
+        String selectedQuestionName = (String) cbbQuestionName.getSelectedItem();
+        questionId = questionMap.get(selectedQuestionName);
         content = txtContent.getText();
-        isCorrect = Boolean.parseBoolean(cbIsCorrect.getText());
+        isCorrect = cbIsCorrect.isSelected();
+        int optionId = ((OptionTableModel) tblOption.getModel()).getOptionId(selectedRow);
 
         if (questionId <= 0) {
             showErrorMessage("Question Id is required!");
@@ -215,21 +222,24 @@ public class OptionManagementPanel extends javax.swing.JPanel {
             return;
         }
 
+        String contentInDB = this.optionController.findContentById(optionId);
         boolean isContentExists = this.optionController.isContentExists(content);
-        if (isContentExists) {
+        if (!content.equals(contentInDB) && isContentExists) {
             showErrorMessage("Content is exists!");
             return;
         }
 
-        modifyOption(questionId, content, isCorrect);
+        modifyOption(optionId, questionId, content, isCorrect);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void tblOptionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOptionMouseClicked
         int row = tblOption.getSelectedRow();
         if (row != -1) {
-            txtQuestionId.setText(tblOption.getValueAt(row, 0).toString());
             txtContent.setText(tblOption.getValueAt(row, 1).toString());
-            cbIsCorrect.setText(tblOption.getValueAt(row, 2).toString());
+            String selectedQuestionName = (String) cbbQuestionName.getSelectedItem();
+            cbbQuestionName.setSelectedItem(selectedQuestionName);
+            boolean isCorrectValue = (boolean) tblOption.getValueAt(row, 3);
+            cbIsCorrect.setSelected(isCorrectValue);
         }
     }//GEN-LAST:event_tblOptionMouseClicked
 
@@ -237,14 +247,39 @@ public class OptionManagementPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbIsCorrectActionPerformed
 
+    private void btnBackToHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHomeActionPerformed
+        mainFrame.showHomePanel();
+    }//GEN-LAST:event_btnBackToHomeActionPerformed
+
     private void loadOptionData() {
-        DefaultTableModel questionModel = (DefaultTableModel) tblOption.getModel();
-        questionModel.setRowCount(0); // Clear existing rows
+        OptionTableModel optionModel = (OptionTableModel) tblOption.getModel();
+        optionModel.setRowCount(0); // Clear existing rows
 
         List<Option> options = optionController.listOptions();
         for (Option option : options) {
-            questionModel.addRow(new Object[]{option.getQuestionId(), option.getContent(), option.isCorrect()});
+            optionModel.addOption(option.getOptionId(), option.getContent(), option.getQuestionName(), option.isCorrect());
         }
+
+        hideColumnByIndex(tblOption, 0);
+    }
+
+    private void loadCbbQuestions() {
+        List<Question> questions = questionController.listQuestions(); // Assuming this fetches all subject data
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for (Question question : questions) {
+            String questionNameItem = question.getTitle();
+            int questionIdItem = question.getQuestionId();
+
+            // Add to JComboBox
+            model.addElement(questionNameItem);
+
+            // Store in the map
+            questionMap.put(questionNameItem, questionIdItem);
+        }
+
+        cbbQuestionName.setModel(model);
     }
 
     private void addOption(int questionId, String content, boolean isCorrect) {
@@ -259,10 +294,12 @@ public class OptionManagementPanel extends javax.swing.JPanel {
 
         loadOptionData();
         clearFields();
+        reloadQuestionMap();
     }
 
-    private void modifyOption(int questionId, String content, boolean isCorrect) {
+    private void modifyOption(int optionId, int questionId, String content, boolean isCorrect) {
         Option option = new Option();
+        option.setOptionId(optionId);
         option.setQuestionId(questionId);
         option.setContent(content);
         option.setCorrect(isCorrect);
@@ -273,6 +310,7 @@ public class OptionManagementPanel extends javax.swing.JPanel {
 
         loadOptionData();
         clearFields();
+        reloadQuestionMap();
     }
 
     private void deleteOption() {
@@ -282,8 +320,7 @@ public class OptionManagementPanel extends javax.swing.JPanel {
             return;
         }
 
-        DefaultTableModel OptionModel = (DefaultTableModel) tblOption.getModel();
-        int optionId = (int) OptionModel.getValueAt(selectedRow, 0);
+        int optionId = ((OptionTableModel) tblOption.getModel()).getOptionId(selectedRow);
 
         int deleteResult = optionController.removeOption(optionId);
         String message = deleteResult > 0 ? "successfully" : "failed";
@@ -291,23 +328,41 @@ public class OptionManagementPanel extends javax.swing.JPanel {
 
         loadOptionData();
         clearFields();
+        reloadQuestionMap();
     }
 
     private void clearFields() {
-        txtQuestionId.setText("");
         txtContent.setText("");
         cbIsCorrect.setText("");
+        cbbQuestionName.setSelectedIndex(0);
     }
 
     private void showErrorMessage(String message) {
         JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    private void hideColumnByIndex(javax.swing.JTable jTable, int columnIndex) {
+        jTable.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setWidth(0);
+    }
+
+    private void reloadQuestionMap() {
+        questionMap.clear(); // Clear existing entries
+        List<Question> questions = questionController.listQuestions(); // Fetch all quizzes
+
+        for (Question question : questions) {
+            questionMap.put(question.getTitle(), question.getQuestionId());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBackToHome;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JCheckBox cbIsCorrect;
+    private javax.swing.JComboBox<String> cbbQuestionName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -320,6 +375,5 @@ public class OptionManagementPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTable tblOption;
     private javax.swing.JTextField txtContent;
-    private javax.swing.JTextField txtQuestionId;
     // End of variables declaration//GEN-END:variables
 }

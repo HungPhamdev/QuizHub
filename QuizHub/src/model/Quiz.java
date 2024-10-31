@@ -6,6 +6,7 @@ public class Quiz {
     private int quizId;
     private String title;
     private int subjectId;
+    private String subjectName;
     private String level;
     private LocalDateTime createdDate;
     private LocalDateTime createdAt;
@@ -23,6 +24,9 @@ public class Quiz {
 
     public int getSubjectId() { return subjectId; }
     public void setSubjectId(int subjectId) { this.subjectId = subjectId; }
+    
+    public String getSubjectName() { return subjectName; }
+    public void setSubjectName(String subjectName) { this.subjectName = subjectName; }
 
     public String getLevel() { return level; }
     public void setLevel(String level) { this.level = level; }

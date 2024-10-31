@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class Question {
     private int questionId;
     private int quizId;
+    private String quizName;
     private String title;
     private String questionType;
     private LocalDateTime createdAt;
@@ -20,6 +21,9 @@ public class Question {
     public int getQuizId() { return quizId; }
     public void setQuizId(int quizId) { this.quizId = quizId; }
 
+    public String getQuizName() { return quizName; }
+    public void setQuizName(String quizName) { this.quizName = quizName; }
+    
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 

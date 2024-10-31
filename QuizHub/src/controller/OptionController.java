@@ -31,4 +31,8 @@ public class OptionController {
     public boolean isContentExists(String content) {
         return optionService.isContentExists(content);
     }
+    
+    public String findContentById(int id){
+        return optionService.findContentById(id);
+    }
 }

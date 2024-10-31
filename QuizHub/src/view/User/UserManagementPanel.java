@@ -7,9 +7,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.User;
 import services.AuthService;
+import view.MainFrame;
 
 public class UserManagementPanel extends javax.swing.JPanel {
 
+    private MainFrame mainFrame;
     private final UserController userController;
     private final AuthService authService;
     private String username;
@@ -18,7 +20,8 @@ public class UserManagementPanel extends javax.swing.JPanel {
     private String email;
     private String role;
 
-    public UserManagementPanel() {
+    public UserManagementPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         userController = new UserController();
         this.authService = new AuthService();
 
@@ -48,6 +51,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
         txtFullname = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         cbxRole = new javax.swing.JComboBox<>();
+        btnBackToHome = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -146,6 +150,16 @@ public class UserManagementPanel extends javax.swing.JPanel {
         cbxRole.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cbxRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn 1 option", "Admin", "Teacher", "Student" }));
         jPanel2.add(cbxRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 220, 260, 30));
+
+        btnBackToHome.setBackground(new java.awt.Color(204, 204, 204));
+        btnBackToHome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBackToHome.setText("<- Back to Home");
+        btnBackToHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToHomeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBackToHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 290, -1, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 950, 330));
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -283,6 +297,10 @@ public class UserManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblUserMouseClicked
 
+    private void btnBackToHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHomeActionPerformed
+        mainFrame.showHomePanel();
+    }//GEN-LAST:event_btnBackToHomeActionPerformed
+
     private void loadUsers() {
         DefaultTableModel userModel = (DefaultTableModel) tblUser.getModel();
         userModel.setRowCount(0); // Clear existing rows
@@ -362,6 +380,7 @@ public class UserManagementPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBackToHome;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxRole;

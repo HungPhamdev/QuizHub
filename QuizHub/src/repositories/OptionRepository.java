@@ -43,14 +43,17 @@ public class OptionRepository {
 
     public List<Option> getAllOptions() {
         List<Option> options = new ArrayList<>();
-        String sql = "SELECT * FROM Options (NOLOCK) WHERE isDeleted = 0";
+        String sql = "SELECT O.OptionId, O.Content, Q.Title QuestionName, O.IsCorrect "
+                    + " FROM Options (NOLOCK) O "
+                    + " JOIN Questions (NOLOCK) Q ON O.QuestionId = Q.QuestionId "
+                    + " WHERE O.isDeleted = 0";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Option option = new Option();
                 option.setOptionId(resultSet.getInt("OptionId"));
-                option.setQuestionId(resultSet.getInt("QuestionId"));
                 option.setContent(resultSet.getString("Content"));
+                option.setQuestionName(resultSet.getString("QuestionName"));
                 option.setCorrect(resultSet.getBoolean("IsCorrect"));
                 options.add(option);
             }
@@ -85,5 +88,20 @@ public class OptionRepository {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public String findContentById(int id) {
+        String sql = "SELECT Content FROM Options (NOLOCK) WHERE IsDeleted = 0 AND OptionId = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("Content");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

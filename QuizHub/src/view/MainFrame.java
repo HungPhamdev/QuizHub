@@ -36,12 +36,12 @@ public class MainFrame extends javax.swing.JFrame {
         loginPanel = new LoginPanel(this);
         registerPanel = new RegisterPanel(this);
         homePanel = new HomepagePanel(this);
-        userManagementPanel = new UserManagementPanel();
-        quizManagementPanel = new QuizManagementPanel();
-        questionManagementPanel = new QuestionManagementPanel();
-        optionManagementPanel = new OptionManagementPanel();
+        userManagementPanel = new UserManagementPanel(this);
+        quizManagementPanel = new QuizManagementPanel(this);
+        questionManagementPanel = new QuestionManagementPanel(this);
+        optionManagementPanel = new OptionManagementPanel(this);
         quizAppView = new QuizAppView();
-        subjectManagementPanel = new SubjectManagementPanel();
+        subjectManagementPanel = new SubjectManagementPanel(this);
 
         // Add panels to the frame
         add(loginPanel, "LoginPanel");
@@ -77,9 +77,6 @@ public class MainFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

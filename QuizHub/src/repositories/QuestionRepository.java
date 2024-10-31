@@ -44,15 +44,18 @@ public class QuestionRepository {
 
     public List<Question> getAllQuestions() {
         List<Question> questions = new ArrayList<>();
-        String sql = "SELECT * FROM Questions (NOLOCK) WHERE isDeleted = 0";
+        String sql = "SELECT Ques.QuestionId, Ques.Title, Ques.QuestionType, Quiz.Title QuizName "
+                    + " FROM Questions (NOLOCK) Ques "
+                    + " JOIN Quizzes (NOLOCK) Quiz ON Ques.QuizId = Quiz.QuizId "
+                    + " WHERE Ques.isDeleted = 0";
         try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Question question = new Question();
-                question.setQuestionId(resultSet.getInt("Id"));
-                question.setTitle(resultSet.getString("QuestionName"));
+                question.setQuestionId(resultSet.getInt("QuestionId"));
+                question.setTitle(resultSet.getString("Title"));
                 question.setQuestionType(resultSet.getString("QuestionType"));
-                question.setQuizId(resultSet.getInt("QuizId"));
+                question.setQuizName(resultSet.getString("QuizName"));
                 questions.add(question);
             }
         } catch (SQLException e) {
@@ -86,5 +89,20 @@ public class QuestionRepository {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public String findTitleById(int id) {
+        String sql = "SELECT Title FROM Questions (NOLOCK) WHERE IsDeleted = 0 AND QuestionId = ?";
+        try (Connection connection = DatabaseConnection.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("Title");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

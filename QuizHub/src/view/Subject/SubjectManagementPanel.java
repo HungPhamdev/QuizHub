@@ -3,16 +3,18 @@ package view.Subject;
 import controller.SubjectController;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Subject;
+import view.MainFrame;
 
 public class SubjectManagementPanel extends javax.swing.JPanel {
 
+    private MainFrame mainFrame;
     private final SubjectController subjectController;
     private String subjectName;
     private String description;
 
-    public SubjectManagementPanel() {
+    public SubjectManagementPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         subjectController = new SubjectController();
 
         initComponents();
@@ -35,6 +37,7 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         txtDescription = new javax.swing.JTextField();
         txtSubjectName = new javax.swing.JTextField();
+        btnBackToHome = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -111,6 +114,16 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
 
         txtSubjectName.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jPanel2.add(txtSubjectName, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 260, 30));
+
+        btnBackToHome.setBackground(new java.awt.Color(204, 204, 204));
+        btnBackToHome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBackToHome.setText("<- Back to Home");
+        btnBackToHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToHomeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBackToHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 190, -1, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 950, 240));
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -195,6 +208,10 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_tblSubjectMouseClicked
 
+    private void btnBackToHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHomeActionPerformed
+        mainFrame.showHomePanel();
+    }//GEN-LAST:event_btnBackToHomeActionPerformed
+
     private void loadSubjectData() {
         SubjectTableModel subjectModel = (SubjectTableModel) tblSubject.getModel();
         subjectModel.setRowCount(0); // Clear existing rows
@@ -268,6 +285,7 @@ public class SubjectManagementPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBackToHome;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JLabel jLabel1;

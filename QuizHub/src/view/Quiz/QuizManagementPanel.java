@@ -1,26 +1,34 @@
 package view.Quiz;
 
 import controller.QuizController;
+import controller.SubjectController;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import model.Quiz;
-import services.AuthService;
+import model.Subject;
+import view.MainFrame;
 
 public class QuizManagementPanel extends javax.swing.JPanel {
 
+    private MainFrame mainFrame;
     private final QuizController quizController;
-    private final AuthService authService;
+    private final SubjectController subjectController;
     private String title;
     private int subjectId;
     private String level;
+    private Map<String, Integer> subjectMap = new HashMap<>();
 
-    public QuizManagementPanel() {
+    public QuizManagementPanel(MainFrame mainFrame) {
+        this.mainFrame = mainFrame;
         quizController = new QuizController();
-        this.authService = new AuthService();
+        subjectController = new SubjectController();
 
         initComponents();
 
+        loadCbbSubjects();
         loadQuizData();
     }
 
@@ -41,6 +49,7 @@ public class QuizManagementPanel extends javax.swing.JPanel {
         txtTitle = new javax.swing.JTextField();
         cbxLevel = new javax.swing.JComboBox<>();
         cbxSubject = new javax.swing.JComboBox<>();
+        btnBackToHome = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -124,8 +133,17 @@ public class QuizManagementPanel extends javax.swing.JPanel {
         jPanel2.add(cbxLevel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 260, 30));
 
         cbxSubject.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cbxSubject.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chọn 1 option", "A", "B", "C" }));
         jPanel2.add(cbxSubject, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, 260, 30));
+
+        btnBackToHome.setBackground(new java.awt.Color(204, 204, 204));
+        btnBackToHome.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        btnBackToHome.setText("<- Back to Home");
+        btnBackToHome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackToHomeActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnBackToHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 200, -1, -1));
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 950, 240));
         jPanel2.getAccessibleContext().setAccessibleName("");
@@ -141,25 +159,7 @@ public class QuizManagementPanel extends javax.swing.JPanel {
         add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 100));
 
         tblQuiz.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        tblQuiz.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Title", "SubjectId", "Level"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Integer.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        tblQuiz.setModel(new QuizTableModel());
         tblQuiz.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblQuizMouseClicked(evt);
@@ -176,13 +176,14 @@ public class QuizManagementPanel extends javax.swing.JPanel {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         title = txtTitle.getText();
-        subjectId = (int) cbxSubject.getSelectedItem();
+        String selectedSubjectName = (String) cbxSubject.getSelectedItem();
+        subjectId = subjectMap.get(selectedSubjectName);
         level = cbxLevel.getSelectedItem().toString();
 
         if (title.trim().isEmpty()) {
             showErrorMessage("Title is required!");
             return;
-        } else if (cbxSubject.getSelectedIndex() == 0) {
+        } else if (selectedSubjectName.trim().isEmpty()) {
             showErrorMessage("Subject is required!");
             return;
         } else if (cbxLevel.getSelectedIndex() == 0) {
@@ -196,24 +197,26 @@ public class QuizManagementPanel extends javax.swing.JPanel {
             return;
         }
 
-        modifyQuiz(title, subjectId, level);
+        addQuiz(title, subjectId, level);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         int selectedRow = tblQuiz.getSelectedRow();
         if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Please select a user to update!");
+            JOptionPane.showMessageDialog(this, "Please select a quiz to update!");
             return;
         }
 
+        int quizId = ((QuizTableModel) tblQuiz.getModel()).getQuizId(selectedRow);
         title = txtTitle.getText();
-        subjectId = (int) cbxSubject.getSelectedItem();
+        String selectedSubjectName = (String) cbxSubject.getSelectedItem();
+        subjectId = subjectMap.get(selectedSubjectName);
         level = cbxLevel.getSelectedItem().toString();
 
         if (title.trim().isEmpty()) {
             showErrorMessage("Title is required!");
             return;
-        } else if (cbxSubject.getSelectedIndex() == 0) {
+        } else if (selectedSubjectName.trim().isEmpty()) {
             showErrorMessage("Subject is required!");
             return;
         } else if (cbxLevel.getSelectedIndex() == 0) {
@@ -221,38 +224,63 @@ public class QuizManagementPanel extends javax.swing.JPanel {
             return;
         }
 
+        String titleInDB = this.quizController.findTitleById(quizId);
         boolean isTitleExists = this.quizController.isTitleExists(title);
-        if (isTitleExists) {
+        if (!title.equals(titleInDB) && isTitleExists) {
             showErrorMessage("Title is exists!");
             return;
         }
 
-        modifyQuiz(title, subjectId, level);
+        modifyQuiz(quizId, title, subjectId, level);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void tblQuizMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblQuizMouseClicked
         int row = tblQuiz.getSelectedRow();
         if (row != -1) {
-            txtTitle.setText(tblQuiz.getValueAt(row, 0).toString());
-            
-            var subjectId = tblQuiz.getValueAt(row, 1);
-            subjectId = subjectId == null ? "Chọn 1 option" : subjectId.toString();
-            cbxSubject.setSelectedItem(tblQuiz.getValueAt(row, 1).toString());
-            
-            var level = tblQuiz.getValueAt(row, 2);
+            txtTitle.setText(tblQuiz.getValueAt(row, 1).toString());
+
+            String subjectName = tblQuiz.getValueAt(row, 2).toString();
+            cbxSubject.setSelectedItem(subjectName);
+
+            var level = tblQuiz.getValueAt(row, 3);
             level = level == null ? "Chọn 1 option" : level.toString();
-            cbxLevel.setSelectedItem(tblQuiz.getValueAt(row, 2).toString());
+            cbxLevel.setSelectedItem(tblQuiz.getValueAt(row, 3).toString());
         }
     }//GEN-LAST:event_tblQuizMouseClicked
 
+    private void btnBackToHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackToHomeActionPerformed
+        mainFrame.showHomePanel();
+    }//GEN-LAST:event_btnBackToHomeActionPerformed
+
     private void loadQuizData() {
-        DefaultTableModel quizModel = (DefaultTableModel) tblQuiz.getModel();
+        QuizTableModel quizModel = (QuizTableModel) tblQuiz.getModel();
         quizModel.setRowCount(0); // Clear existing rows
 
         List<Quiz> quizzes = quizController.listQuizzes();
         for (Quiz quiz : quizzes) {
-            quizModel.addRow(new Object[]{quiz.getTitle(), quiz.getSubjectId(), quiz.getLevel()});
+            quizModel.addQuiz(quiz.getQuizId(), quiz.getTitle(), quiz.getSubjectName(), quiz.getLevel());
         }
+        
+        hideColumnByIndex(tblQuiz, 0);
+    }
+
+    private void loadCbbSubjects() {
+        List<Subject> subjects = subjectController.listSubjects(); // Assuming this fetches all subject data
+
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for (Subject subject : subjects) {
+            String subjectNameItem = subject.getSubjectName();
+            int subjectIdItem = subject.getId();
+
+            // Add to JComboBox
+            model.addElement(subjectNameItem);
+
+            // Store in the map
+            subjectMap.put(subjectNameItem, subjectIdItem);
+        }
+
+        cbxSubject.setModel(model);
     }
 
     private void addQuiz(String title, int subjectId, String level) {
@@ -260,17 +288,19 @@ public class QuizManagementPanel extends javax.swing.JPanel {
         quiz.setTitle(title);
         quiz.setSubjectId(subjectId);
         quiz.setLevel(level);
-        
+
         int insertResult = quizController.addQuiz(quiz);
         String message = insertResult > 0 ? "successfully" : "failed";
         JOptionPane.showMessageDialog(this, String.format("Quiz added %s!", message));
 
         loadQuizData();
         clearFields();
+        reloadSubjectMap();
     }
 
-    private void modifyQuiz(String title, int subjectId, String level) {
+    private void modifyQuiz(int quizId, String title, int subjectId, String level) {
         Quiz quiz = new Quiz();
+        quiz.setQuizId(quizId);
         quiz.setTitle(title);
         quiz.setSubjectId(subjectId);
         quiz.setLevel(level);
@@ -281,6 +311,7 @@ public class QuizManagementPanel extends javax.swing.JPanel {
 
         loadQuizData();
         clearFields();
+        reloadSubjectMap();
     }
 
     private void deleteQuiz() {
@@ -290,8 +321,7 @@ public class QuizManagementPanel extends javax.swing.JPanel {
             return;
         }
 
-        DefaultTableModel quizModel = (DefaultTableModel) tblQuiz.getModel();
-        int quizId = (int) quizModel.getValueAt(selectedRow, 0);
+        int quizId = ((QuizTableModel) tblQuiz.getModel()).getQuizId(selectedRow);
 
         int deleteResult = quizController.removeQuiz(quizId);
         String message = deleteResult > 0 ? "successfully" : "failed";
@@ -299,6 +329,7 @@ public class QuizManagementPanel extends javax.swing.JPanel {
 
         loadQuizData();
         clearFields();
+        reloadSubjectMap();
     }
 
     private void clearFields() {
@@ -311,8 +342,24 @@ public class QuizManagementPanel extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, message, "Input Error", JOptionPane.ERROR_MESSAGE);
     }
 
+    private void hideColumnByIndex(javax.swing.JTable jTable, int columnIndex) {
+        jTable.getColumnModel().getColumn(columnIndex).setMinWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setMaxWidth(0);
+        jTable.getColumnModel().getColumn(columnIndex).setWidth(0);
+    }
+
+    private void reloadSubjectMap() {
+        subjectMap.clear(); // Clear existing entries
+        List<Subject> subjects = subjectController.listSubjects(); // Fetch all subjects
+
+        for (Subject subject : subjects) {
+            subjectMap.put(subject.getSubjectName(), subject.getId());
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnBackToHome;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> cbxLevel;

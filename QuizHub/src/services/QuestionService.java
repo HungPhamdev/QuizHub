@@ -31,4 +31,8 @@ public class QuestionService {
     public boolean isTitleExists(String title) {
         return questionRepository.isTitleExists(title);
     }
+    
+    public String findTitleById(int id){
+        return questionRepository.findTitleById(id);
+    }
 }
