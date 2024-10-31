@@ -2,33 +2,35 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Question {
-    private int questionId;
+public class Quiz {
     private int quizId;
-    private String quizName;
     private String title;
-    private String questionType;
+    private int subjectId;
+    private String subjectName;
+    private String level;
+    private LocalDateTime createdDate;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
     private String updatedBy;
     private Boolean isDeleted;
+    private int duration;
 
     // Getters and Setters
-    public int getQuestionId() { return questionId; }
-    public void setQuestionId(int questionId) { this.questionId = questionId; }
-
     public int getQuizId() { return quizId; }
     public void setQuizId(int quizId) { this.quizId = quizId; }
 
-    public String getQuizName() { return quizName; }
-    public void setQuizName(String quizName) { this.quizName = quizName; }
-    
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
 
-    public String getQuestionType() { return questionType; }
-    public void setQuestionType(String questionType) { this.questionType = questionType; }
+    public int getSubjectId() { return subjectId; }
+    public void setSubjectId(int subjectId) { this.subjectId = subjectId; }
+    
+    public String getSubjectName() { return subjectName; }
+    public void setSubjectName(String subjectName) { this.subjectName = subjectName; }
+
+    public String getLevel() { return level; }
+    public void setLevel(String level) { this.level = level; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
@@ -44,4 +46,7 @@ public class Question {
     
     public Boolean getIsDeleted() { return isDeleted; }
     public void setIsDeleted(Boolean isDeleted) { this.isDeleted = isDeleted; }
+    
+    public int getDuration() { return duration; }
+    public void setDuration(int duration) { this.duration = duration; }
 }

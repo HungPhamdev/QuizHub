@@ -2,12 +2,13 @@ package model;
 
 import java.time.LocalDateTime;
 
-public class Question {
-    private int questionId;
-    private int quizId;
-    private String quizName;
-    private String title;
-    private String questionType;
+public class User {
+    private int id;
+    private String userName;
+    private String password;
+    private String email;
+    private String fullName;
+    private String role;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;
@@ -15,20 +16,23 @@ public class Question {
     private Boolean isDeleted;
 
     // Getters and Setters
-    public int getQuestionId() { return questionId; }
-    public void setQuestionId(int questionId) { this.questionId = questionId; }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 
-    public int getQuizId() { return quizId; }
-    public void setQuizId(int quizId) { this.quizId = quizId; }
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
 
-    public String getQuizName() { return quizName; }
-    public void setQuizName(String quizName) { this.quizName = quizName; }
-    
-    public String getTitle() { return title; }
-    public void setTitle(String title) { this.title = title; }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public String getQuestionType() { return questionType; }
-    public void setQuestionType(String questionType) { this.questionType = questionType; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
     
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
